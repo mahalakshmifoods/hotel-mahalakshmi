@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>HOTEL MAHALAKSHMI</title>
+<style>
+body {font-family: Arial; background:#f4f4f4; padding:10px;}
+h1{text-align:center;color:#b30000;}
+.item{background:#fff;padding:10px;margin:10px;border-radius:8px;display:flex;justify-content:space-between;}
+button{padding:6px 10px;background:green;color:white;border:none;border-radius:5px;}
+.cart{background:#fff;padding:10px;border-radius:8px;}
+select,input{width:100%;padding:8px;margin-top:5px;}
+.status{margin-top:10px;font-weight:bold;color:#0000cc;}
+.admin{background:#ffe;border-radius:8px;padding:10px;margin-top:20px;}
+</style>
+</head>
+
+<body>
+
+<h1>🍽 HOTEL MAHALAKSHMI</h1>
+
+<div class="item">🍕 Pizza ₹200 <button onclick="add('Pizza',200)">Add</button></div>
+<div class="item">🍔 Burger ₹120 <button onclick="add('Burger',120)">Add</button></div>
+<div class="item">🍟 Fries ₹80 <button onclick="add('Fries',80)">Add</button></div>
+<div class="item">🥤 Drink ₹50 <button onclick="add('Drink',50)">Add</button></div>
+
+<div class="cart">
+<h3>🛒 Cart</h3>
+<p id="cartItems"></p>
+<p>Total: ₹<span id="total">0</span></p>
+
+<input type="text" id="name" placeholder="Customer Name">
+<input type="text" id="address" placeholder="Delivery Address">
+
+<select id="payment">
+<option>Cash on Delivery</option>
+<option>UPI</option>
+</select>
+
+<button onclick="sendWhatsApp()">Order via WhatsApp</button>
+
+<div class="status">Order Status: <span id="status">Not Ordered</span></div>
+</div>
+
+<div class="admin">
+<h3>👨‍🍳 Order Status Control (Restaurant)</h3>
+<button onclick="setStatus('Preparing')">Preparing</button>
+<button onclick="setStatus('Left for Delivery')">Left for Delivery</button>
+<button onclick="setStatus('Delivered')">Delivered</button>
+</div>
+
+<script>
+let cart=[];
+let total=0;
+
+function add(item,price){
+ cart.push(item);
+ total+=price;
+ document.getElementById("cartItems").innerText=cart.join(", ");
+ document.getElementById("total").innerText=total;
+}
+
+function sendWhatsApp(){
+ let name=document.getElementById("name").value;
+ let address=document.getElementById("address").value;
+ let payment=document.getElementById("payment").value;
+
+ let msg="*HOTEL MAHALAKSHMI - New Order*%0A"+
+ "Name: "+name+
+ "%0AItems: "+cart.join(", ")+
+ "%0ATotal: ₹"+total+
+ "%0APayment: "+payment+
+ "%0AAddress: "+address;
+
+ let phone="917483899413";
+ window.open("https://wa.me/"+phone+"?text="+msg,"_blank");
+
+ if(payment=="UPI"){
+   window.open("upi://pay?pa=YOURUPI@upi&pn=HOTELMAHALAKSHMI&am="+total,"_blank");
+ }
+
+ document.getElementById("status").innerText="Order Sent";
+}
+
+function setStatus(s){
+ document.getElementById("status").innerText=s;
+}
+</script>
+
+</body>
+</html>
