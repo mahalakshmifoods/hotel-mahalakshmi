@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>HOTEL MAHALAKSHMI</title>
+<style>
+body{font-family:Arial;background:#f5f5f5;margin:0}
+header{background:#8b0000;color:white;padding:10px;text-align:center}
+.item{background:white;margin:8px;padding:10px;border-radius:8px;display:flex;justify-content:space-between}
+.cart{background:white;padding:10px;margin:10px;border-radius:8px}
+button{background:green;color:white;border:none;padding:5px 10px;border-radius:5px}
+select,input{width:100%;padding:8px;margin-top:5px}
+</style>
+</head>
+<body>
+
+<header>
+<h2>HOTEL MAHALAKSHMI</h2>
+<p>Order Online</p>
+</header>
+
+<div id="menu"></div>
+
+<div class="cart">
+<h3>Cart</h3>
+<p id="cartItems"></p>
+<p>Total ₹<span id="total">0</span></p>
+
+<input id="name" placeholder="Your Name">
+<input id="address" placeholder="Address">
+
+<select id="payment">
+<option>Cash on Delivery</option>
+<option>UPI</option>
+</select>
+
+<button onclick="order()">Order on WhatsApp</button>
+</div>
+
+<script>
+let menu=[('Dal Fry', 80), ('Dal Maharaja', 100), ('Dal Tadka', 85), ('Dal Palak', 90), ('Mix Veg Masala', 100), ('Paneer Masala', 120), ('Paneer Butter Masala', 130), ('Paneer Mutter Masala', 130), ('Paneer Kadai', 120), ('Paneer Tikka Masala', 140), ('Palak Paneer', 120), ('Paneer Burji', 100), ('Mushroom Masala', 120), ('Mushroom Butter Masala', 120), ('Mushroom Kadai', 120), ('Gobi Masala', 100), ('Gobi Butter Masala', 110), ('Alu Gobi Masala', 110), ('Soya Masala', 100), ('Malai Kofta', 150), ('Paneer Kofta', 130), ('Veg Kofta', 130), ('Chicken Masala', 130), ('Chicken Butter Masala', 130), ('Chicken Kadai', 130), ('Chicken Maharaja', 160), ('Chicken Nihari', 150), ('Chicken Kolapuri', 130), ('Chicken Curry', 130), ('Chicken Tikka Masala', 150), ('Egg Masala', 80), ('Egg Kadai', 90), ('Half Fry Masala', 60), ('Jeera Rice', 80), ('Ghee Rice', 100), ('Veg Biryani', 120), ('Paneer Biryani', 140), ('Soya Biryani', 120), ('Chicken Biryani', 130), ('Donne Biryani', 150), ('Egg Biryani', 120), ('Fish Biryani', 200), ('Veg Fried Rice', 75), ('Egg Fried Rice', 80), ('Chicken Fried Rice', 90), ('Veg Noodles', 75), ('Egg Noodles', 80), ('Chicken Noodles', 90)];
+
+let cart=[],total=0;
+let menuDiv=document.getElementById("menu");
+
+menu.forEach(m=>{
+ let d=document.createElement("div");
+ d.className="item";
+ d.innerHTML=m[0]+" ₹"+m[1]+" <button onclick='add(""+m[0]+"","+m[1]+")'>Add</button>";
+ menuDiv.appendChild(d);
+});
+
+function add(name,price){
+ cart.push(name);
+ total+=price;
+ document.getElementById("cartItems").innerText=cart.join(", ");
+ document.getElementById("total").innerText=total;
+}
+
+function order(){
+ let payment=document.getElementById("payment").value;
+ let msg="HOTEL MAHALAKSHMI Order:%0A"+cart.join(", ")+"%0ATotal:"+total+"%0APayment:"+payment;
+ window.open("https://wa.me/917483899413?text="+msg);
+ if(payment=="UPI"){
+   window.open("upi://pay?pa=7483899413@okbizaxis&pn=HOTELMAHALAKSHMI&am="+total);
+ }
+}
+</script>
+
+</body>
+</html>
