@@ -18,10 +18,87 @@ select,input{width:100%;padding:8px;margin-top:5px;}
 
 <h1>🍽 HOTEL MAHALAKSHMI</h1>
 
-<div class="item">🍕 Pizza ₹200 <button onclick="add('Pizza',200)">Add</button></div>
-<div class="item">🍔 Burger ₹120 <button onclick="add('Burger',120)">Add</button></div>
-<div class="item">🍟 Fries ₹80 <button onclick="add('Fries',80)">Add</button></div>
-<div class="item">🥤 Drink ₹50 <button onclick="add('Drink',50)">Add</button></div>
+let menu = [
+
+/* VEG GRAVY */
+["Dal Fry",80],["Dal Maharaja",100],["Dal Tadka",85],["Dal Palak",90],
+["Mix Veg Masala",100],["Paneer Masala",120],["Paneer Butter Masala",130],
+["Paneer Mutter Masala",130],["Paneer Kadai",120],["Paneer Tikka Masala",140],
+["Palak Paneer",120],["Paneer Burji",100],
+["Mushroom Masala",120],["Mushroom Butter Masala",120],["Mushroom Kadai",120],
+["Gobi Masala",100],["Gobi Butter Masala",110],["Alu Gobi Masala",110],
+["Soya Masala",100],["Malai Kofta",150],["Paneer Kofta",130],["Veg Kofta",130],
+
+/* SABZI */
+["Bindi Fry",70],["Alu Jeera",70],["Dahi Alu",70],["Alu Bhujia",70],
+["Alu Gobi",70],["Alu Bindi",70],["Baigan Bharta",70],["Alu Mirchi",70],
+["Alu Barta",70],["Kashmiri Dum Alu",110],["Soya Sukka",80],
+["Paneer Sukka",120],["Mushroom Sukka",120],["Chicken Sukka",130],
+
+/* ROTI */
+["Tawa Roti",10],["Triangle Parota",15],["Kerala Parota",15],
+["Paneer Parota",60],["Cheese Parota",60],["Gobi Parota",40],
+["Onion Parota",30],["Sattu Parota",40],["Chicken Parota",70],
+["Egg Parota",40],
+
+/* CHICKEN GRAVY */
+["Chicken Masala",130],["Chicken Butter Masala",130],["Chicken Palak Masala",130],
+["Chicken Kadai",130],["Chicken Maharaja",160],["Chicken Nihari",150],
+["Methi Chicken",130],["Keema Chicken",150],["Chicken Kolapuri",130],
+["Chicken Curry (Bengal Style)",130],["Chicken Thoofani",130],
+["Chicken Tikka Masala",150],["Chicken Patiala",180],
+
+/* EGG ITEMS */
+["Egg Masala",80],["Egg Kadai",90],["Burji Masala",60],["Half Fry Masala",60],
+
+/* RICE ITEMS */
+["Jeera Rice",80],["Ghee Rice",100],["Veg Biryani",120],["Paneer Biryani",140],
+["Soya Biryani",120],["Chicken Biryani",130],["Donne Biryani",150],
+["Chicken Tikka Biryani",160],["Egg Biryani",120],["Prawns Biryani",250],
+["Fish Biryani",200],["Dal Khichdi",80],["Mix Veg Dal Khichdi",110],
+
+/* SOUP */
+["Veg Soup",40],["Chicken Manchow Soup",60],
+
+/* FRIED RICE */
+["Veg Fried Rice",75],["Veg Schezwan Rice",85],
+["Paneer Fried Rice",90],["Mushroom Fried Rice",90],
+["Singapore Fried Rice",90],["Gobi Fried Rice",80],
+["Egg Fried Rice",80],["Egg Schezwan Rice",90],
+["Chicken Fried Rice",90],["Chicken Schezwan Rice",100],
+["Chicken Garlic Rice",100],["Chicken Butter Garlic Rice",110],
+["Chicken Singapore Rice",100],
+
+/* NOODLES */
+["Veg Hakka Noodles",75],["Veg Schezwan Noodles",85],["Paneer Noodles",90],
+["Mushroom Noodles",90],["Garlic Noodles",100],
+["Egg Noodles",80],["Egg Schezwan Noodles",90],
+["Chicken Hakka Noodles",90],["Chicken Schezwan Noodles",100],
+["Chicken Garlic Noodles",100],
+
+/* STARTERS VEG */
+["Gobi Manchurian",80],["Gobi Pepper",90],["Gobi Chilly",80],
+["Paneer Manchurian",120],["Paneer Butter Garlic",130],
+["Paneer 65",120],["Paneer Pepper",130],
+["Mushroom Manchurian",120],["Mushroom Pepper",130],
+["Potato Chilli",80],["Honey Chilli Potato",90],
+["Soya Manchurian",80],["Soya Pepper",80],
+
+/* STARTERS EGG */
+["Omelet Chilly",60],["Egg Chilly",90],["Egg Burji",40],
+
+/* STARTERS CHICKEN */
+["Chicken Chilly",130],["Chicken Garlic",140],["Chicken Pepper Dry",130],
+["Chicken Butter Garlic",150],["Chicken 65",130],["Chicken Ghee Roast",160],
+["Chicken Hyderabad Dry",140],["Crispy Chicken",140],
+["Honey Garlic Chicken",130],["Schezwan Spicy Chicken",140],
+["Ginger Chicken",140],["Liver Chilly",110],["Liver Pepper",110],
+["Liver Sukka",100],
+
+/* SEAFOOD */
+["Fish Kabab",150],["Fish Chilly",200],["Prawns Chilly",250]
+
+];
 
 <div class="cart">
 <h3>🛒 Cart</h3>
