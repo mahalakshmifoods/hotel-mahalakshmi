@@ -1,23 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>HOTEL MAHALAKSHMI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Mahalakshmi Menu</title>
 <style>
-body {font-family: Arial; background:#f4f4f4; padding:10px;}
-h1{text-align:center;color:#b30000;}
-.item{background:#fff;padding:10px;margin:10px;border-radius:8px;display:flex;justify-content:space-between;}
-button{padding:6px 10px;background:green;color:white;border:none;border-radius:5px;}
-.cart{background:#fff;padding:10px;border-radius:8px;}
-select,input{width:100%;padding:8px;margin-top:5px;}
-.status{margin-top:10px;font-weight:bold;color:#0000cc;}
-.admin{background:#ffe;border-radius:8px;padding:10px;margin-top:20px;}
+  body { font-family: Arial, sans-serif; background:#f9f1e7; color:#5a2c1f; margin:0; padding:0;}
+  header { background:#800000; color:#fff; text-align:center; padding:15px;}
+  header h1 { margin:0; font-size:24px;}
+  header p { margin:2px 0; font-size:16px;}
+  .container { padding:15px; }
+  .menu-category { font-weight:bold; font-size:18px; margin-top:20px; border-bottom:1px solid #5a2c1f;}
+  .menu-item { display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px dashed #5a2c1f;}
+  .menu-item button { padding:3px 8px; background:#800000; color:#fff; border:none; border-radius:4px; cursor:pointer;}
+  .cart { position:fixed; bottom:0; right:0; background:#fff; padding:10px; border-top-left-radius:10px; border:1px solid #5a2c1f; max-width:90%; }
+  .cart p { margin:5px 0; }
+  .cart button { padding:5px 10px; background:#800000; color:#fff; border:none; border-radius:4px; cursor:pointer; margin-top:5px;}
 </style>
 </head>
-
 <body>
 
-<h1>🍽 HOTEL MAHALAKSHMI</h1>
+<header>
+  <h1>HOTEL MAHALAKSHMI</h1>
+  <p>North Kitchen & Fast Food</p>
+  <p>Ph: 7483899413 | 8277283763 | Free Home Delivery</p>
+</header>
 
+<div class="container" id="menu-container"></div>
+
+<div class="cart" id="cart">
+  <p><b>Cart:</b></p>
+  <div id="cart-items"></div>
+  <p>Total: ₹<span id="total">0</span></p>
+  <button onclick="checkout()">Order via WhatsApp</button>
+</div>
+
+<script>
+// -------- MENU ITEMS --------
 let menu = [
 
 /* VEG GRAVY */
@@ -100,66 +119,49 @@ let menu = [
 
 ];
 
-<div class="cart">
-<h3>🛒 Cart</h3>
-<p id="cartItems"></p>
-<p>Total: ₹<span id="total">0</span></p>
+// -------- CART LOGIC --------
+let cart = [];
+let menuContainer = document.getElementById('menu-container');
 
-<input type="text" id="name" placeholder="Customer Name">
-<input type="text" id="address" placeholder="Delivery Address">
+menu.forEach((item,index)=>{
+  let div = document.createElement('div');
+  div.className = 'menu-item';
+  div.innerHTML = `<span>${item[0]} - ₹${item[1]}</span>
+                   <button onclick="addToCart(${index})">Add</button>`;
+  menuContainer.appendChild(div);
+});
 
-<select id="payment">
-<option>Cash on Delivery</option>
-<option>UPI</option>
-</select>
-
-<button onclick="sendWhatsApp()">Order via WhatsApp</button>
-
-<div class="status">Order Status: <span id="status">Not Ordered</span></div>
-</div>
-
-<div class="admin">
-<h3>👨‍🍳 Order Status Control (Restaurant)</h3>
-<button onclick="setStatus('Preparing')">Preparing</button>
-<button onclick="setStatus('Left for Delivery')">Left for Delivery</button>
-<button onclick="setStatus('Delivered')">Delivered</button>
-</div>
-
-<script>
-let cart=[];
-let total=0;
-
-function add(item,price){
- cart.push(item);
- total+=price;
- document.getElementById("cartItems").innerText=cart.join(", ");
- document.getElementById("total").innerText=total;
+function addToCart(index){
+  cart.push(menu[index]);
+  updateCart();
 }
 
-function sendWhatsApp(){
- let name=document.getElementById("name").value;
- let address=document.getElementById("address").value;
- let payment=document.getElementById("payment").value;
-
- let msg="*HOTEL MAHALAKSHMI - New Order*%0A"+
- "Name: "+name+
- "%0AItems: "+cart.join(", ")+
- "%0ATotal: ₹"+total+
- "%0APayment: "+payment+
- "%0AAddress: "+address;
-
- let phone="917483899413";
- window.open("https://wa.me/"+phone+"?text="+msg,"_blank");
-
- if(payment=="UPI"){
-   window.open("upi://pay?pa=YOURUPI@upi&pn=HOTELMAHALAKSHMI&am="+total,"_blank");
- }
-
- document.getElementById("status").innerText="Order Sent";
+function updateCart(){
+  let cartDiv = document.getElementById('cart-items');
+  cartDiv.innerHTML = '';
+  let total = 0;
+  cart.forEach((item,i)=>{
+    total += item[1];
+    cartDiv.innerHTML += `<div>${item[0]} - ₹${item[1]} 
+    <button onclick="removeItem(${i})">X</button></div>`;
+  });
+  document.getElementById('total').innerText = total;
 }
 
-function setStatus(s){
- document.getElementById("status").innerText=s;
+function removeItem(i){
+  cart.splice(i,1);
+  updateCart();
+}
+
+function checkout(){
+  if(cart.length==0){ alert("Cart is empty"); return; }
+  let text = "Order from Hotel Mahalakshmi:%0A";
+  cart.forEach(item=>{
+    text += `${item[0]} - ₹${item[1]}%0A`;
+  });
+  text += `Total: ₹${document.getElementById('total').innerText}%0A`;
+  text += `Payment: COD / UPI(7483899413@okbizaxis)`;
+  window.open(`https://wa.me/917483899413?text=${text}`,'_blank');
 }
 </script>
 
